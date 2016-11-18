@@ -28,7 +28,7 @@ $(document).ready(function(){
 
     $('h1').click(function(){
         // http://www.clipartpanda.com/clipart_images/coffee-bean-clip-art-20547903
-        $('h1').append('<img src="images/coffee-bean-nb.png" alt="coffee bean">');
+        $('h1').append('<img src="images/coffee-bean.png" alt="coffee bean">');
         for (i=0; i < 100; i++){
             var jump = Math.round(Math.random()*40);
             var jumpPos = '+='.concat(String(jump)).concat('px');
