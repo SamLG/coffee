@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Coffee Home</title>
+        <link href="css/coffee.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Chango" rel="stylesheet">
+        <script src="https://use.fontawesome.com/3827869be9.js"></script>
+    </head>
+    <body>
+        <header>
+            <a href="#content" class="sr-only">skip to content</a>
+            <h1>Coffee!</h1>
+            <div></div>
+            <nav>
+                <ul>
+                    <li><a href="index.html"><i class="fa fa-home" aria-hidden="true"></i>Home</a></li>
+                    <li><a href="page2.html">Virtual Barrista</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main id="content">
+            <!--coffee1 https://www.flickr.com/photos/aigle_dore/5191559433/in/gallery-30446987@N04-72157627032500160/
+                coffee2 https://pixabay.com/en/coffee-beans-coffee-time-for-coffee-759024/
+                coffee3 https://www.pexels.com/photo/coffee-mug-with-cafe-latte-173382/
+                coffee4 https://pixabay.com/en/coffee-art-love-design-heart-milk-608968/
+                coffee5 https://pixabay.com/en/coffee-beans-coffee-cup-cup-coffee-1082213/
+                coffee6 https://www.pexels.com/photo/coffee-cup-spoon-cappuccino-5178/
+                coffee7 https://pixabay.com/en/coffee-cup-cup-of-coffee-coffee-cup-1580595/
+                coffee8 https://www.pexels.com/photo/coffee-cup-cafe-cappuccino-27818/
+                coffee9 https://www.pexels.com/photo/cold-coffee-steam-gloves-6626/-->
+            <img id="coffee-img" src="images/coffee1.jpg" alt="coffee" class="floatright">
+            <p>That magical espresso-based world, filled with flavor!</p>
+            <p>Coffee is big business around the world. Every day billions of global citizens partake in a cup of steaming brewed coffee. Some people drink this liquid java in the morning, to kickstart their day. Some drink coffee in the evening as a relaxing digestif. Some drink coffee throughout the day. Some of us need decaf, to eliminate a hyper buzz, and some of us can't feel the effect of caffeine even when we want it.</p>
+            <p>Besides differing on when we drink coffee, we differ even more on how to take it. Do you like a cappucino, with a thick head of foam? Don't care for the bitter bite of espresso, how about a sweet mocha? Or do you like to take your coffee straight and dark, as a shot or more of pure espresso?</p>
+            <p>No matter how you take your coffee, I think many of us can agree that it is delicious.</p>
+        </main>
+
+        <form action="" method="">
+            <fieldset>
+                <legend>Let's learn a little bit about you. (all required)</legend>
+                <label for="name">Name</label>
+                <input type="text" id="name" aria-required="true" autofocus placeholder="Jane Doe">
+
+                <label for="phone">Phone Number (123)123-1234</label>
+                <input type="tel" id="phone" aria-required="true" placeholder="(123)456-7890">
+<!-- pattern="/\(\d{3}\)\d{3}-\d{4}/" -->
+                <label for="email">Email</label>
+                <input type="email" id="email" aria-required="true" placeholder="example@site.com">
+
+                <label for="zipcode">Zipcode</label>
+                <input type="text" pattern="[0-9]{5}" id="zipcode" aria-required="true" placeholder="12345">
+            </fieldset>
+
+            <fieldset>
+                <legend>Now let's learn about your taste profile!</legend>
+
+                <p>Preferred Notes</p>
+                <label><input type="checkbox" value="">Earth</label>
+                <label><input type="checkbox" value="photography">Fruit</label>
+                <label><input type="checkbox" value="videoproduction">Spice</label>
+                <label><input type="checkbox" value="art">Chocolate</label>
+                <br>
+                <p>Crema Level</p>
+                <label><input type="radio" name="crema" id="">Very Little Crema</label>
+                <label><input type="radio" name="crema" id="">Moderate</label>
+                <label><input type="radio" name="crema" id="">The More The Better</label>
+                <br>
+                <p>Oil Level</p>
+                <label><input type="radio" name="oil" id="">Not Keen On Oil, Is It Over Roasted?</label>
+                <label><input type="radio" name="oil" id="">Some Oil</label>
+                <label><input type="radio" name="oil" id="">I Like A Dark Espresso, With Lots of Oil</label>
+                <br>
+                <p>Foam Level?</p>
+                <label><input type="radio" name="foam" id="">I Don't Need Foam</label>
+                <label><input type="radio" name="foam" id="">I Like Proportionate Foam</label>
+                <label><input type="radio" name="foam" id="">I Want All Of The Foam</label>
+            </fieldset>
+            <div>
+                <button id="submit-btn" type="submit">Submit Your Choices</button>
+                <div id="submit-msg"></div>
+            </div>
+        </form>
+        <footer>
+            <p>Created by SamGrise &copy; 2016 | Last Updated: November 16th 2016</p>
+        </footer>
+        <script
+        			  src="https://code.jquery.com/jquery-3.1.1.min.js"
+        			  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+        			  crossorigin="anonymous"></script>
+        <script src="js/coffee.js"></script>
+    </body>
+</html>

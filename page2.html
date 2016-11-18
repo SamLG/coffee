@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Virtual Barrista</title>
+        <link href="css/coffee.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Chango" rel="stylesheet">
+        <script src="https://use.fontawesome.com/3827869be9.js"></script>
+    </head>
+    <body>
+        <header>
+            <a href="#content" class="sr-only">skip to content</a>
+            <h1>Coffee!</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html"><i class="fa fa-home" aria-hidden="true"></i>Home</a></li>
+                    <li><a href="page2.html">Virtual Barrista</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <!-- https://pixabay.com/en/espresso-barista-cappuccino-cafe-1153384/ -->
+            <div id="virtual-barrista-intro">
+                <img src="images/espresso-brewing.jpg" alt="espresso brewing" class="floatleft">
+                <h2>Virtual Barrista</h2>
+                <p>Pour your espresso first, then add your milk, then your foam.</p>
+                <p>Your drink name will display here.</p>
+            </div>
+            <!-- canvas height has to be preset in the html -->
+            <div id="virtual-barrista">
+                <canvas width="500" height="350" id="myCanvas"></canvas>
+                <button id="espresso-btn">Add Espresso Shot</button>
+                <!-- <button>Add Steamed Milk</button> -->
+                <div id="milk">
+                    <p>Add Steamed Milk</p>
+                    <select id="milk-opt">
+                        <option value="whole">Whole</option>
+                        <option value="2%">2%</option>
+                        <option value="soy">Soy</option>
+                    </select>
+                </div>
+                <button id="foam-btn">Add Milk Foam</button>
+                <button id="clear-btn">Clear My Drink</button>
+            </div>
+        </main>
+        <footer>
+            <p>Created by SamGrise &copy; 2016 | Last Updated: November 16th 2016</p>
+        </footer>
+        <script
+			  src="https://code.jquery.com/jquery-3.1.1.min.js"
+			  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+			  crossorigin="anonymous"></script>
+    	<script src="https://cdnjs.cloudflare.com/ajax/libs/jcanvas/16.7.3/jcanvas.js"></script>
+        <script src="js/coffee.js"></script>
+    </body>
+</html>
