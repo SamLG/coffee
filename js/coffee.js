@@ -428,23 +428,29 @@ $(document).ready(function(){
     /*determines the liquid level and corresponding position of the foam in the
     cup also sets the foamAdded value for the other methods*/
     function addFoam () {
-        foamAdded = true;
         switch (liquidLevel) {
             case 'low':
                 drawFoam(250, 34);
+                foamAdded = true;
+                // foam has been added, need to inform user of updated drink
+                whatDrink();
                 break;
             case 'middle':
                 drawFoam(200, 17);
+                foamAdded = true;
+                // foam has been added, need to inform user of updated drink
+                whatDrink();
                 break;
             case 'top':
                 drawFoam(160, 5);
+                foamAdded = true;
+                // foam has been added, need to inform user of updated drink
+                whatDrink();
                 break;
             default:
                 foamAdded = false;
                 break;
         }
-        // foam has been added, need to inform user of updated drink
-        whatDrink();
     }
     /*when foam button clicked draws foam*/
     $('#foam-btn').click(function(){
