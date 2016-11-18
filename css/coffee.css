@@ -191,6 +191,11 @@ canvas {
     -moz-box-shadow: 2px 2px 1px 1px rgba(0,0,0,0.68);
     box-shadow: 2px 2px 1px 1px rgba(0,0,0,0.68);
 }
+#virtual-barrista #comingsoon {
+    background:  #ffcccc;
+    height: 5em;
+    width: 20em;
+}
 footer {
     background: white;
     border-top: 2px solid black;
