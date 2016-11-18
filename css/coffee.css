@@ -50,7 +50,9 @@ header h1 {
     float: left;
     /*clear: both;*/
     text-align: center;
-    /*so h1 doesn't highlight when clicking for beans*/
+}
+.likeButton {
+    /*so doesn't highlight when clicking for beans or milk*/
     -webkit-user-select: none;  /* Chrome all / Safari all */
     -moz-user-select: none;     /* Firefox all */
     -ms-user-select: none;      /* IE 10+ */

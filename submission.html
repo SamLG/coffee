@@ -10,7 +10,7 @@
     <body>
         <header>
             <a href="#content" class="sr-only">skip to content</a>
-            <h1>Coffee!</h1>
+            <h1 class="likeButton">Coffee!</h1>
             <div></div>
             <nav>
                 <ul>
@@ -29,6 +29,9 @@
         			  src="https://code.jquery.com/jquery-3.1.1.min.js"
         			  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
         			  crossorigin="anonymous"></script>
+        <!-- I know jcanvas.js isn't needed here, but otherwise I get a console
+        error, since I only have 1 js file and it uses jcanvas methods-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jcanvas/16.7.3/jcanvas.js"></script>
         <script src="js/coffee.js"></script>
     </body>
 </html>

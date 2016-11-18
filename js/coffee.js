@@ -202,24 +202,18 @@ $(document).ready(function(){
        *** foam.                                        ***
        ****************************************************/
 
-    var espressoCount; //keep track of shots of espresso
-    var milkCount;  //keep track of shots of milk
-    var milkTypeColor; //keep track of chosen milk
-    var liquidLevel; //keep track of volume to know where to draw foam
-    var foamAdded; //know when foam was added
+    var espressoCount = 0; //keep track of shots of espresso
+    var milkCount = 0;  //keep track of shots of milk
+    var milkTypeColor = '#f2f2d9'; //keep track of chosen milk, intially whole milk
+    var liquidLevel = 'none'; //keep track of volume to know where to draw foam
+    var foamAdded = false; //know when foam was added
+    var drink = "no name"; //keep track of drink name
 
     /**
      * This method will draw cup, saucer, and message and initialize values
      */
     function setStage () {
-        $('#virtual-barrista-intro p:last-of-type').text('Your drink name will display here.');
         $('canvas').clearCanvas(); //clear the canvas before drawing the stage
-        //initially should have nothing added to cup
-        espressoCount = 0;
-        milkCount = 0;
-        milkTypeColor = '#f2f2d9'; //initial milk type is whole milk
-        liquidLevel = 'none';
-        foamAdded = false;
         $('canvas').drawRect({ //background color
             fillStyle: 'lightgrey',
             x: 250, y: 175,
@@ -274,52 +268,41 @@ $(document).ready(function(){
     setStage(); //must call the above method when the page loads
 
     /**
-     * This method will draw one shot espresso in bottom of cup
+     * This method will draw a shot of liquid based on coordinates and color
+     * from when the method is called
+     *
+     * I did have separate methods for espresso shots 1, 2, 3 and milk 1, 2
+     * but realized it was repetitive... now there is just shot()
+     * I did also try to see if there was a pattern in the coordinates to
+     * reduce params, but it there weren't any significant differences to work
+     * from
+     *
+     * @param color the color of the liquid
+     * @param xOne top left x coordinate
+     * @param xTwo bottom left x coordinate
+     * @param xThree bottom right x coordinate
+     * @param xFour top right x coordinate
+     * @param yTop top y coordinate
+     * @param yBottom bottom y coordinate
      */
-    function oneEspressoShot () {
+    function shot (color, xOne, xTwo, xThree, xFour, yTop, yBottom) {
         $('canvas').drawPath( {
-            fillStyle: '#331a00',
+            fillStyle: color,
             p1: {
                 type: 'line',
-                x1: 84, y1: 250,//tl
-                x2: 100, y2: 300,//bl
-                x3: 200, y3: 300,//br
-                x4: 217, y4: 250 //tr
+                x1: xOne, y1: yTop,//tl
+                x2: xTwo, y2: yBottom,//bl
+                x3: xThree, y3: yBottom,//br
+                x4: xFour, y4: yTop //tr
             }
         })
     };
-
-    /**
-     * This method will draw one shot espresso in middle of cup
+    /*  Values for espresso shot()
+        espresso: '#331a00'
+        oneEspressoShot 84 100 200 217 250 300
+        twoEspressoShot 66 84 217 234 200 250
+        threeEspressoShot 54 66 234 247 160 200
      */
-    function twoEspressoShot () {
-        $('canvas').drawPath( {
-        	fillStyle: '#331a00',
-        	p1: {
-        		type: 'line',
-    			x1: 66, y1: 200,//tl
-        		x2: 84, y2: 250,//bl
-                x3: 217, y3: 250,//br
-                x4: 234, y4: 200 //tr
-            }
-        })
-    };
-
-    /**
-     * This method will draw one shot espresso in top of cup
-     */
-    function threeEspressoShot () {
-        $('canvas').drawPath( {
-        	fillStyle: '#331a00',
-        	p1: {
-        		type: 'line',
-    			x1: 54, y1: 160,//tl
-        		x2: 66, y2: 200,//bl
-                x3: 234, y3: 200,//br
-                x4: 247, y4: 160 //tr
-            }
-        })
-    };
 
     /*when the espresso button is clicked add espresso depending on how much
     espresso is already in cup, make sure that there is no foam or milk */
@@ -327,15 +310,15 @@ $(document).ready(function(){
         if (!foamAdded && milkCount == 0) {
             espressoCount++;
             if (espressoCount == 1) {
-                oneEspressoShot();
+                shot('#331a00', 84, 100, 200, 217, 250, 300);
                 liquidLevel = 'low';
             }
             else if (espressoCount == 2) {
-                twoEspressoShot();
+                shot('#331a00', 66, 84, 217, 234, 200, 250);
                 liquidLevel = 'middle';
             }
             else if (espressoCount == 3) {
-                threeEspressoShot();
+                shot('#331a00', 54, 66, 234, 247, 160, 200);
                 liquidLevel = 'top';
             }
             /*this means that the espressoCount is over 3... not currently allowed
@@ -349,72 +332,49 @@ $(document).ready(function(){
         whatDrink();
     });
 
-    /**
-     * This method will draw one shot milk in middle of cup
-     *
-     * @param milkType the kind of milk chosen shown by color
+    /*  Values for milk shot()
+        milkType
+        66 84 217 234 200 250
+        54 66 234 247 160 200
      */
-    function oneMilkShot (milkType) {
-        $('canvas').drawPath( {
-        	fillStyle: milkType,
-        	p1: {
-        		type: 'line',
-    			x1: 66, y1: 200,//tl
-        		x2: 84, y2: 250,//bl
-                x3: 217, y3: 250,//br
-                x4: 234, y4: 200 //tr
-            }
-        })
-    };
-    function twoMilkShot (milkType) {
-        $('canvas').drawPath( {
-        	fillStyle: milkType,
-        	p1: {
-        		type: 'line',
-    			x1: 54, y1: 160,//tl
-        		x2: 66, y2: 200,//bl
-                x3: 234, y3: 200,//br
-                x4: 247, y4: 160 //tr
-            }
-        })
-    };
 
+    /*when milk button is clicked a shot will be drawn so long as there is
+      espresso already in the cup, the cup isn't full, and no foam has been
+      added*/
     $('#milk p').click(function(){
-        if (!foamAdded){
-            console.log('milk has been clicked');
+        // if foam or no espresso then no milk
+        if (!foamAdded && espressoCount > 0 && liquidLevel != 'top'){
+            // for testing console.log('milk has been clicked');
             milkCount++;
+            // espresso 1 milk 1 liquid level is in the middle
             if (espressoCount == 1 && milkCount == 1) {
-                oneMilkShot(milkType());
+                shot(milkType(), 66, 84, 217, 234, 200, 250);
                 liquidLevel = 'middle';
-                console.log('inside oneshot');
+                // inform user when change is made, what drink is
+                whatDrink();
+                // for testing console.log('inside oneshot');
             }
-            else if (espressoCount == 2){
-                twoMilkShot(milkType());
+            // espresso 2 or espresso 1 milk 2 -> liquid top
+            if (espressoCount == 2 || (espressoCount == 1 && milkCount == 2)){
+                shot(milkType(), 54, 66, 234, 247, 160, 200);
                 liquidLevel = 'top';
-                console.log('inside two shot espresso is 2');
+                // inform user when change is made, what drink is
+                whatDrink();
+                // for testing console.log('inside two shot espresso is 2');
             }
-            else if (espressoCount == 1 && milkCount == 2) {
-                twoMilkShot(milkType());
-                liquidLevel = 'top';
-                console.log('inside two shot espresso is 1');
-                // milkCount = 2;
-            }
-            else if (espressoCount == 0){
-                milkCount = 0;
-                //no can do, submit message "pour your espresso first"
-            }
-            else {
-                //no can do, submit message "your cup is either full, or there is no espresso,
-                milkCount = 2;
-            }
-            console.log("milkCount" + milkCount);
         }
-        whatDrink();
+        // for testing console.log("milkCount" + milkCount);
     });
 
+    /**
+     * This method will get from the select input what kind of milk the user
+     * wants and return a corresponding color
+     *
+     * @return milkTypeColor the color of the chosen milk
+     */
     function milkType (){
         var milkType = $('#milk-opt').val();
-        console.log(milkType);
+        // for testing console.log(milkType);
         switch (milkType) {
             case 'whole':
                 milkTypeColor = '#f2f2d9';
@@ -431,8 +391,17 @@ $(document).ready(function(){
         }
         return milkTypeColor;
     }
+
+    /**
+     * This method will draw a shot of liquid based on coordinates and color
+     * from when the method is called
+     *
+     * @param height the y coordinate of the bottom of the foam
+     * @param diff the difference from x coordinates at top of cup
+     *             to change the width of the foam
+     */
     function drawFoam (height, diff) {
-        $('canvas').drawQuadratic({
+        $('canvas').drawQuadratic({ // first foam dollop
             strokeStyle: '#ffff99',
             strokeWidth: 2,
             fillStyle: '#f5f5ef',
@@ -440,7 +409,7 @@ $(document).ready(function(){
             cx1: 200, cy1: height-150, // Control point
             x2: 250 - diff, y2: height // End point
         })
-        .drawQuadratic({
+        .drawQuadratic({ // second foam dollop
             strokeStyle: '#ffff99',
             strokeWidth: 2,
             fillStyle: '#f5f5ef',
@@ -448,14 +417,17 @@ $(document).ready(function(){
             cx1: 200, cy1: height-150, // Control point
             x2: 200, y2: height-50 // End point
         })
-        .drawLine({
+        .drawLine({ // outline for bottom of foam
             strokeStyle: '#ffff99',
             strokeWidth: 2,
             x1: 50 + diff, y1: height,
             x2: 250 - diff, y2: height
         });
     }
-    $('#foam-btn').click(function(){
+
+    /*determines the liquid level and corresponding position of the foam in the
+    cup also sets the foamAdded value for the other methods*/
+    function addFoam () {
         foamAdded = true;
         switch (liquidLevel) {
             case 'low':
@@ -471,11 +443,23 @@ $(document).ready(function(){
                 foamAdded = false;
                 break;
         }
+        // foam has been added, need to inform user of updated drink
         whatDrink();
+    }
+    /*when foam button clicked draws foam*/
+    $('#foam-btn').click(function(){
+        addFoam();
     });
 
+    /**
+     * This method will check the values of the various counts and foam to
+     * determine if the combination correlates to any specific espresso drinks
+     * then that result is written to the page. The drinks below are the only
+     * drinks that correlated with the options of espresso, milk, foam...
+     * Unless the combo fits one of the statements below, then the drink does
+     * not have a common name and "no name" is written to the page
+     */
     function whatDrink () {
-        var drink = "no name";
         if (espressoCount == 1 && milkCount == 0 && !foamAdded) {
             drink = "espresso (30ml espresso) <br/>or ristretto (22ml concentrated espresso)";
         }
@@ -497,19 +481,67 @@ $(document).ready(function(){
         else if (espressoCount == 3 && milkCount == 0 && !foamAdded) {
             drink = "lungo (90ml less concentrated espresso)";
         }
-
+        else {
+            drink = "no name";
+        }
         $('#virtual-barrista-intro p:last-of-type').html(drink);
     }
 
+    // when the clear button is clicked the stage and vars are reset
     $('#clear-btn').click(function(){
+        espressoCount = 0;
+        milkCount = 0;
+        milkTypeColor = '#f2f2d9';
+        liquidLevel = 'none';
+        foamAdded = false;
+        $('#virtual-barrista-intro p:last-of-type').text('Your drink name will display here.');
         setStage();
     });
-    //I moved my original clear on click functionality all into setStage so I could address part of the jcanvas bug on hover, all of my canvas but text was getting wiped on hover off, so I at least have the cup and saucer drawn again
+
+    /**
+     * This method will check the values of the various counts and foam to
+     * determine to redraw the drink that is on the page currently. This
+     * is to address a jcanvas bug, in which when the Canvas is hovered off
+     * of the image disappears. Multiple shots of one type of liquid are drawn
+     * at once.
+     */
+    function redraw () {
+        switch (espressoCount) {
+            case 1:
+            // for testing console.log("made it");
+                shot('#331a00', 84, 100, 200, 217, 250, 300);
+                if (milkCount == 1) {
+                    shot(milkType(), 66, 84, 217, 234, 200, 250);
+                }
+                if (milkCount == 2) {
+                    shot(milkType(), 54, 84, 217, 247, 160, 250);
+                }
+                break;
+            case 2:
+                shot('#331a00', 66, 100, 200, 234, 200, 300);
+                if(milkCount == 1) {
+                    shot(milkType(), 54, 66, 234, 247, 160, 200);
+                }
+                break;
+            case 3:
+                shot('#331a00', 54, 100, 200, 247, 160, 300);
+                break;
+            default:
+                break;
+        }
+        if (foamAdded) {
+            addFoam();
+        }
+    }
+    /*I moved my original clear on click functionality all into setStage so I
+    could address the jcanvas bug on hover off, in which all of my canvas but text
+    was getting wiped*/
     $('canvas').hover(
         function() {
         },
         function() {
             setStage();
+            redraw();
         }
     );
 
