@@ -54,7 +54,7 @@ header h1 {
     -webkit-user-select: none;  /* Chrome all / Safari all */
     -moz-user-select: none;     /* Firefox all */
     -ms-user-select: none;      /* IE 10+ */
-    user-select: none;          /* Likely future */
+    /*user-select: none;          Likely future considered error in css checker*/
 }
 header img {
     padding-top: 1.25em;
