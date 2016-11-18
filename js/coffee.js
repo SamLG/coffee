@@ -1,9 +1,16 @@
+/**
+ * This js file add functionality to coffe.samgrise.me for form validation,
+ * interaction, and virtual-barrista
+ *
+ * @author Sam Grise
+ * @version Last modified 11_18_16
+**/
 $(document).ready(function(){
 
-    //alter image of coffee when hovered over
     var sources = ["images/coffee1.jpg", "images/coffee2.jpg", "images/coffee3.jpg", "images/coffee4.jpg", "images/coffee5.jpg", "images/coffee6.jpg", "images/coffee7.jpg", "images/coffee8.jpg", "images/coffee9.jpg"];
     var color = ["black","#000066","#660000","#006600","#4d0066","#663300","#666600","#004d66","#006666"];
     var coffeeCount = 0;
+    //alter image of coffee when hovered over
     $('#coffee-img').hover(function(){
         if (coffeeCount == (sources.length-1)) {
             coffeeCount = 0;
@@ -17,6 +24,7 @@ $(document).ready(function(){
         $('p:first').css({
             color: color[Math.round(Math.random()*(color.length))]
         }); //end css
+    //return state on hover off
     },function(){
         $('#coffee-img').attr({
             'src': sources[0]
@@ -26,9 +34,11 @@ $(document).ready(function(){
     	}); //end css
     }); //end hover
 
+    //create bouncing coffee beans on click, bounce is randomized, for more natural effect
     $('h1').click(function(){
         // http://www.clipartpanda.com/clipart_images/coffee-bean-clip-art-20547903
         $('h1').append('<img src="images/coffee-bean.png" alt="coffee bean">');
+        // i < 100 gets the bean off the screen
         for (i=0; i < 100; i++){
             var jump = Math.round(Math.random()*40);
             var jumpPos = '+='.concat(String(jump)).concat('px');
@@ -37,13 +47,13 @@ $(document).ready(function(){
                 bottom: jumpPos,
                 left: jumpPos
             }, 100, function() {
-                // Animation complete.
+                // Animation complete jump up.
             })
             .animate({
                     bottom: jumpNeg,
                     left: jumpPos
                 }, 100, function() {
-                // Animation complete.
+                // Animation complete jump down.
             });
         }
         /* I wanted to remove the beans when they were off the page... but I
@@ -52,7 +62,7 @@ $(document).ready(function(){
         // $('header img:last-of-type').remove();
     });
 
-    var submitNoError = true;
+    //check that all requried fields validate before submission and display error if necessary
     $('#submit-btn').click(function(submit){
         var nE = nameError();
         var pE = phoneError();
@@ -60,11 +70,15 @@ $(document).ready(function(){
         var zE = zipcodeError();
         if (!nE || !pE || !eE || !zE){
             $('#submit-msg').html('Please Fill All Required Fields');
-            submitNoError = true;
             submit.preventDefault();
         }
     }); //end click
 
+    /**
+     * This method will check to make sure name has length and display error if necessary
+     *
+     * @return  Returns boolean value
+     */
     function nameError () {
         if ($('#name').val().length == 0){
             $('#name').attr({
@@ -76,6 +90,12 @@ $(document).ready(function(){
             return true;
         }
     };
+
+    /**
+     * This method will check to make sure phone number is (xxx)xxx-xxxx and display error if necessary
+     *
+     * @return  Returns boolean value
+     */
     function phoneError () {
         if (!$('#phone').val().match(/^\(\d{3}\)\d{3}-\d{4}$/g)){
             $('#phone').attr({
@@ -87,8 +107,14 @@ $(document).ready(function(){
             return true;
         }
     };
+
+    /**
+     * This method will check to make sure email is x@x.x and display error if necessary
+     *
+     * @return  Returns boolean value
+     */
     function emailError () {
-        if (!$('#email').val().match(/\S+\@\S+\S/g)){
+        if (!$('#email').val().match(/\S+\@\S+\.\S/g)){
             $('#email').attr({
                 'placeholder': 'REQUIRED ex: example@site.com'
             }).addClass('error');
@@ -98,6 +124,12 @@ $(document).ready(function(){
             return true;
         }
     };
+
+    /**
+     * This method will check to make sure zipcode is 5 digits and display error if necessary
+     *
+     * @return  Returns boolean value
+     */
     function zipcodeError () {
         if (!$('#zipcode').val().match(/\d{5}/g)){
             $('#zipcode').attr({
@@ -109,36 +141,52 @@ $(document).ready(function(){
             return true;
         }
     };
+
+    //validate name when user leaves input area
     $('#name').focusout(function(){
         nameError();
     }); //end focusout
+
+    //on focus remove error styling and remove submit error message
     $('#name').focus(function(){
         $('#name').removeClass('error').attr({
             'placeholder': 'Jane Doe'
         });
         $('#submit-msg').html('');
     }); //end focus
+
+    //validate phone when user leaves input area
     $('#phone').focusout(function(){
         phoneError();
     }); //end focusout
+
+    //on focus remove error styling and remove submit error message
     $('#phone').focus(function(){
         $('#phone').removeClass('error').attr({
             'placeholder': '(123)456-7890'
         });
         $('#submit-msg').html('');
     }); //end focus
+
+    //validate email when user leaves input area
     $('#email').focusout(function(){
         emailError();
     }); //end focusout
+
+    //on focus remove error styling and remove submit error message
     $('#email').focus(function(){
         $('#email').removeClass('error').attr({
             'placeholder': 'example@site.com'
         });
         $('#submit-msg').html('');
     }); //end focus
+
+    //validate zipcode when user leaves input area
     $('#zipcode').focusout(function(){
         zipcodeError();
     }); //end focusout
+
+    //on focus remove error styling and remove submit error message
     $('#zipcode').focus(function(){
         $('#zipcode').removeClass('error').attr({
             'placeholder': '12345'
@@ -146,29 +194,39 @@ $(document).ready(function(){
         $('#submit-msg').html('');
     }); //end focus
 
-    // ***CANVAS FUNCTIONALITY***
+      /****************************************************
+       ***                                              ***
+       ***               VIRTUAL-BARRISTA               ***
+       ***              CANVAS FUNCTIONALITY            ***
+       *** Rules: must pour espresso, then milk, then   ***
+       *** foam.                                        ***
+       ****************************************************/
 
-    var espressoCount;
-    var milkCount;
-    var milkTypeColor;
-    var liquidLevel;
-    var foamAdded;
-    // draw cup, saucer, and message
+    var espressoCount; //keep track of shots of espresso
+    var milkCount;  //keep track of shots of milk
+    var milkTypeColor; //keep track of chosen milk
+    var liquidLevel; //keep track of volume to know where to draw foam
+    var foamAdded; //know when foam was added
+
+    /**
+     * This method will draw cup, saucer, and message and initialize values
+     */
     function setStage () {
         $('#virtual-barrista-intro p:last-of-type').text('Your drink name will display here.');
-        $('canvas').clearCanvas();
+        $('canvas').clearCanvas(); //clear the canvas before drawing the stage
+        //initially should have nothing added to cup
         espressoCount = 0;
         milkCount = 0;
-        milkTypeColor = '#f2f2d9';
+        milkTypeColor = '#f2f2d9'; //initial milk type is whole milk
         liquidLevel = 'none';
         foamAdded = false;
-        $('canvas').drawRect({
+        $('canvas').drawRect({ //background color
             fillStyle: 'lightgrey',
             x: 250, y: 175,
             width: 500,
             height: 350
         })
-        .drawText({
+        .drawText({ //text
             layer: true,
             fillStyle: 'black',
             strokeStyle: 'black',
@@ -179,28 +237,28 @@ $(document).ready(function(){
             fontFamily: 'Verdana, sans-serif',
             text: 'Make your ideal espresso-based drink',
         }) //end text
-        .drawEllipse({
+        .drawEllipse({ //cup saucer
             fillStyle: '#ffffff',
             strokeStyle: '#000000',
             strokeWidth: 1,
             x: 150, y: 300,
             width: 200, height: 80
         })
-        .drawQuadratic({
+        .drawQuadratic({ //cup handle
           strokeStyle: '#000',
           strokeWidth: 1,
           x1: 232, y1: 200, // Start point
           cx1: 280, cy1: 230, // Control point
           x2: 210, y2: 250 // End point
         })
-        .drawQuadratic({
+        .drawQuadratic({ //cup handle
           strokeStyle: '#000',
           strokeWidth: 1,
           x1: 232, y1: 196, // Start point
           cx1: 287, cy1: 232, // Control point
           x2: 210, y2: 254 // End point
         })
-        .drawPath( {
+        .drawPath( { //cup
             strokeStyle: '#000000',
             strokeWidth: 1,
         	fillStyle: '#ffffff',
@@ -213,8 +271,11 @@ $(document).ready(function(){
             }
         });
     }; //end setStage
-    setStage();
+    setStage(); //must call the above method when the page loads
 
+    /**
+     * This method will draw one shot espresso in bottom of cup
+     */
     function oneEspressoShot () {
         $('canvas').drawPath( {
             fillStyle: '#331a00',
@@ -228,6 +289,9 @@ $(document).ready(function(){
         })
     };
 
+    /**
+     * This method will draw one shot espresso in middle of cup
+     */
     function twoEspressoShot () {
         $('canvas').drawPath( {
         	fillStyle: '#331a00',
@@ -241,6 +305,9 @@ $(document).ready(function(){
         })
     };
 
+    /**
+     * This method will draw one shot espresso in top of cup
+     */
     function threeEspressoShot () {
         $('canvas').drawPath( {
         	fillStyle: '#331a00',
@@ -254,10 +321,8 @@ $(document).ready(function(){
         })
     };
 
-    // var espressoCount = 0;
-    // var milkCount = 0;
-    // var milkTypeColor = '#f2f2d9';
-
+    /*when the espresso button is clicked add espresso depending on how much
+    espresso is already in cup, make sure that there is no foam or milk */
     $('#espresso-btn').click(function(){
         if (!foamAdded && milkCount == 0) {
             espressoCount++;
@@ -272,16 +337,23 @@ $(document).ready(function(){
             else if (espressoCount == 3) {
                 threeEspressoShot();
                 liquidLevel = 'top';
-                // espressoCount--;
             }
+            /*this means that the espressoCount is over 3... not currently allowed
+             so  must decrement*/
             else {
                 espressoCount--;
             }
-            console.log("espressoCount:" + espressoCount);
+            //for testing console.log("espressoCount:" + espressoCount);
         }
+        //at every stage of drink mixing, must inform user of their drink choice
         whatDrink();
     });
 
+    /**
+     * This method will draw one shot milk in middle of cup
+     *
+     * @param milkType the kind of milk chosen shown by color
+     */
     function oneMilkShot (milkType) {
         $('canvas').drawPath( {
         	fillStyle: milkType,
