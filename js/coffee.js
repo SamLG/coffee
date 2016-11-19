@@ -60,7 +60,7 @@ $(document).ready(function(){
          couldn't get this to work, adding the line below made all of the
          functioning of the bouncing beans not work */
         // $('header img:last-of-type').remove();
-    });
+    });//end click
 
     //check that all requried fields validate before submission and display error if necessary
     $('#submit-btn').click(function(submit){
