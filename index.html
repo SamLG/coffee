@@ -55,6 +55,7 @@
             <fieldset>
                 <legend>Now let's learn about your taste profile!</legend>
 
+                <!--role="radiogroup" not included, because it does not validate-->
                 <p id="notes">Preferred Notes</p>
                 <label><input type="checkbox" value="earth" checked aria-checked="true" aria-labelledby="notes">Earth</label>
                 <label><input type="checkbox" value="photography" aria-checked="false" aria-labelledby="notes">Fruit</label>
@@ -62,19 +63,19 @@
                 <label><input type="checkbox" value="art" aria-checked="false" aria-labelledby="notes">Chocolate</label>
                 <br>
                 <p id="crema">Crema Level</p>
-                <label><input type="radio" name="crema" role="radiogroup" checked aria-checked="true" aria-labelledby="crema">Very Little Crema</label>
-                <label><input type="radio" name="crema" role="radiogroup" aria-checked="false" aria-labelledby="crema">Moderate</label>
-                <label><input type="radio" name="crema" role="radiogroup" aria-checked="false" aria-labelledby="crema">The More The Better</label>
+                <label><input type="radio" name="crema"  checked aria-checked="true" aria-labelledby="crema">Very Little Crema</label>
+                <label><input type="radio" name="crema"  aria-checked="false" aria-labelledby="crema">Moderate</label>
+                <label><input type="radio" name="crema"  aria-checked="false" aria-labelledby="crema">The More The Better</label>
                 <br>
                 <p id="oil">Oil Level</p>
-                <label><input type="radio" name="oil" role="radiogroup" checked aria-checked="true" aria-labelledby="oil">Not Keen On Oil, Is It Over Roasted?</label>
-                <label><input type="radio" name="oil" role="radiogroup" aria-checked="false" aria-labelledby="oil">Some Oil</label>
-                <label><input type="radio" name="oil" role="radiogroup" aria-checked="false" aria-labelledby="oil">I Like A Dark Espresso, With Lots of Oil</label>
+                <label><input type="radio" name="oil"  checked aria-checked="true" aria-labelledby="oil">Not Keen On Oil, Is It Over Roasted?</label>
+                <label><input type="radio" name="oil"  aria-checked="false" aria-labelledby="oil">Some Oil</label>
+                <label><input type="radio" name="oil"  aria-checked="false" aria-labelledby="oil">I Like A Dark Espresso, With Lots of Oil</label>
                 <br>
                 <p id="foam">Foam Level?</p>
-                <label><input type="radio" name="foam" role="radiogroup" checked aria-checked="true" aria-labelledby="foam">I Don't Need Foam</label>
-                <label><input type="radio" name="foam" role="radiogroup" aria-checked="false" aria-labelledby="foam">I Like Proportionate Foam</label>
-                <label><input type="radio" name="foam" role="radiogroup" aria-checked="false" aria-labelledby="foam">I Want All Of The Foam</label>
+                <label><input type="radio" name="foam"  checked aria-checked="true" aria-labelledby="foam">I Don't Need Foam</label>
+                <label><input type="radio" name="foam"  aria-checked="false" aria-labelledby="foam">I Like Proportionate Foam</label>
+                <label><input type="radio" name="foam"  aria-checked="false" aria-labelledby="foam">I Want All Of The Foam</label>
             </fieldset>
             <div>
                 <button id="submit-btn" type="submit">Submit Your Choices</button>
